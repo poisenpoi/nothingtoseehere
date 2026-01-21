@@ -9,6 +9,12 @@ type ProfileViewProps = {
 };
 
 export default function ProfileView({ profile, user, onEdit }: ProfileViewProps) {
+  const websiteUrl = profile?.companyWebsite
+    ? profile.companyWebsite.startsWith("http")
+      ? profile.companyWebsite
+      : `https://${profile.companyWebsite}`
+    : "#";
+
   return (
     <div className="bg-white shadow rounded-lg overflow-hidden">
       <div className="px-4 py-5 sm:px-6 flex justify-between items-center">
@@ -86,9 +92,9 @@ export default function ProfileView({ profile, user, onEdit }: ProfileViewProps)
             <dt className="text-sm font-medium text-gray-500">Company Website</dt>
             <dd className="mt-1 text-sm text-gray-900 sm:col-span-2 sm:mt-0">
               {profile?.companyWebsite ? (
-                <a 
-                  href={profile.companyWebsite} 
-                  target="_blank" 
+                <a
+                  href={websiteUrl}
+                  target="_blank"
                   rel="noopener noreferrer"
                   className="text-eduBlue hover:underline"
                 >
