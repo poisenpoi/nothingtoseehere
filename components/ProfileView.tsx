@@ -82,16 +82,16 @@ export default function ProfileView({ profile, user, onEdit }: ProfileViewProps)
       {/* Content Section */}
       <div className="px-6 py-12 sm:px-8 lg:px-12">
         <div className="max-w-5xl mx-auto space-y-8">
-          {/* Two Column Cards */}
+          {/* Three Column Cards */}
           <div className="grid grid-cols-1 lg:grid-cols-3 gap-8">
-            {/* Personal Details Card */}
-            <div className="lg:col-span-2 bg-white rounded-3xl shadow-sm border border-slate-100 overflow-hidden hover:shadow-md transition-shadow">
+            {/* Name & DOB Card */}
+            <div className="bg-white rounded-3xl shadow-sm border border-slate-100 overflow-hidden hover:shadow-md transition-shadow">
               <div className="px-6 py-5 bg-gradient-to-r from-slate-50 to-white border-b border-slate-100">
                 <div className="flex items-center gap-3">
                   <div className="p-2 bg-eduBlue/10 rounded-xl">
                     <UserIcon className="w-5 h-5 text-eduBlue" />
                   </div>
-                  <h2 className="text-lg font-semibold text-slate-900">Personal Details</h2>
+                  <h2 className="text-lg font-semibold text-slate-900">Identity</h2>
                 </div>
               </div>
               <div className="p-6 space-y-5">
@@ -109,6 +109,20 @@ export default function ProfileView({ profile, user, onEdit }: ProfileViewProps)
                   iconBg="bg-purple-50"
                   iconColor="text-purple-600"
                 />
+              </div>
+            </div>
+
+            {/* Gender & Email Card */}
+            <div className="bg-white rounded-3xl shadow-sm border border-slate-100 overflow-hidden hover:shadow-md transition-shadow">
+              <div className="px-6 py-5 bg-gradient-to-r from-slate-50 to-white border-b border-slate-100">
+                <div className="flex items-center gap-3">
+                  <div className="p-2 bg-eduBlue/10 rounded-xl">
+                    <UserIcon className="w-5 h-5 text-eduBlue" />
+                  </div>
+                  <h2 className="text-lg font-semibold text-slate-900">Details</h2>
+                </div>
+              </div>
+              <div className="p-6 space-y-5">
                 <DetailItem
                   icon={<Users className="w-4 h-4" />}
                   label="Gender"
@@ -127,7 +141,7 @@ export default function ProfileView({ profile, user, onEdit }: ProfileViewProps)
             </div>
 
             {/* Company Card */}
-            <div className="lg:col-span-1 bg-white rounded-3xl shadow-sm border border-slate-100 overflow-hidden hover:shadow-md transition-shadow flex flex-col">
+            <div className="bg-white rounded-3xl shadow-sm border border-slate-100 overflow-hidden hover:shadow-md transition-shadow flex flex-col">
               <div className="px-6 py-5 bg-gradient-to-r from-slate-50 to-white border-b border-slate-100">
                 <div className="flex items-center gap-3">
                   <div className="p-2 bg-indigo-50 rounded-xl">
