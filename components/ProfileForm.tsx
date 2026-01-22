@@ -229,6 +229,23 @@ export default function ProfileForm({ profile, user, onCancel }: ProfileFormProp
                 <option value="FEMALE">Female</option>
               </select>
             </FormField>
+
+            <FormField
+              icon={<FileText className="w-4 h-4" />}
+              label="Bio"
+              colorClass="text-rose-600"
+              bgClass="bg-rose-100"
+            >
+              <textarea
+                name="bio"
+                id="bio"
+                rows={4}
+                value={formData.bio}
+                onChange={handleChange}
+                placeholder="Tell us about yourself..."
+                className={inputClassName + " resize-none"}
+              />
+            </FormField>
           </div>
         </div>
 
@@ -269,23 +286,6 @@ export default function ProfileForm({ profile, user, onCancel }: ProfileFormProp
                 onChange={handleChange}
                 placeholder="https://example.com"
                 className={inputClassName}
-              />
-            </FormField>
-
-            <FormField
-              icon={<FileText className="w-4 h-4" />}
-              label="Bio"
-              colorClass="text-rose-600"
-              bgClass="bg-rose-100"
-            >
-              <textarea
-                name="bio"
-                id="bio"
-                rows={4}
-                value={formData.bio}
-                onChange={handleChange}
-                placeholder="Tell us about yourself..."
-                className={inputClassName + " resize-none"}
               />
             </FormField>
           </div>

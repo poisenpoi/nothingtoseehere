@@ -5,7 +5,6 @@ import {
   User as UserIcon,
   Calendar,
   Users,
-  FileText,
   Building2,
   Globe,
   Pencil,
@@ -164,13 +163,6 @@ export default function ProfileView({ profile, user, onEdit }: ProfileViewProps)
               }
               colorClass="text-cyan-600"
               bgClass="bg-cyan-100"
-            />
-            <InfoItem
-              icon={<FileText className="w-4 h-4" />}
-              label="Bio"
-              value={profile?.bio}
-              colorClass="text-rose-600"
-              bgClass="bg-rose-100"
             />
           </div>
         </div>
