@@ -12,8 +12,7 @@ import {
   Globe,
   Image,
   X,
-  Save,
-  Hash
+  Save
 } from "lucide-react";
 
 type ProfileFormProps = {
@@ -148,20 +147,6 @@ export default function ProfileForm({ profile, user, onCancel }: ProfileFormProp
           </div>
           <div className="px-6 divide-y divide-slate-100">
             <FormField
-              icon={<Hash className="w-4 h-4" />}
-              label="User ID"
-              colorClass="text-slate-600"
-              bgClass="bg-slate-100"
-            >
-              <input
-                type="text"
-                value={user.id}
-                disabled
-                className="w-full rounded-xl border border-slate-200 bg-slate-50 px-4 py-2.5 text-sm text-slate-500 font-mono cursor-not-allowed"
-              />
-            </FormField>
-
-            <FormField
               icon={<Image className="w-4 h-4" />}
               label="Picture URL"
               colorClass="text-indigo-600"
@@ -229,11 +214,28 @@ export default function ProfileForm({ profile, user, onCancel }: ProfileFormProp
                 <option value="FEMALE">Female</option>
               </select>
             </FormField>
+
+            <FormField
+              icon={<FileText className="w-4 h-4" />}
+              label="Bio"
+              colorClass="text-rose-600"
+              bgClass="bg-rose-100"
+            >
+              <textarea
+                name="bio"
+                id="bio"
+                rows={4}
+                value={formData.bio}
+                onChange={handleChange}
+                placeholder="Tell us about yourself..."
+                className={inputClassName + " resize-none"}
+              />
+            </FormField>
           </div>
         </div>
 
         {/* Company Information Card */}
-        <div className="bg-white border border-slate-200/60 rounded-2xl shadow-sm overflow-hidden">
+        <div className="bg-white border border-slate-200/60 rounded-2xl shadow-sm overflow-hidden h-fit">
           <div className="px-6 py-4 border-b border-slate-100">
             <h2 className="text-lg font-bold text-slate-900">Company Information</h2>
           </div>
@@ -269,23 +271,6 @@ export default function ProfileForm({ profile, user, onCancel }: ProfileFormProp
                 onChange={handleChange}
                 placeholder="https://example.com"
                 className={inputClassName}
-              />
-            </FormField>
-
-            <FormField
-              icon={<FileText className="w-4 h-4" />}
-              label="Bio"
-              colorClass="text-rose-600"
-              bgClass="bg-rose-100"
-            >
-              <textarea
-                name="bio"
-                id="bio"
-                rows={4}
-                value={formData.bio}
-                onChange={handleChange}
-                placeholder="Tell us about yourself..."
-                className={inputClassName + " resize-none"}
               />
             </FormField>
           </div>
