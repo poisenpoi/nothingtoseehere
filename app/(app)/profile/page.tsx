@@ -23,9 +23,5 @@ export default async function ProfilePage() {
     redirect("/login");
   }
 
-  return (
-    <main className="bg-white min-h-screen max-w-7xl mx-auto px-6 py-6 lg:px-8">
-      <ProfileContainer user={userData} profile={userData.profile} />
-    </main>
-  );
+  return <ProfileContainer user={userData} profile={userData.profile} />;
 }
