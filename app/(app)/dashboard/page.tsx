@@ -5,8 +5,7 @@ import { redirect } from "next/navigation";
 import { prisma } from "@/lib/prisma";
 import { ActiveCourseBanner } from "@/components/ActiveCourseBanner";
 import { DashboardStats } from "@/components/DashboardStats";
-import { EnrolledCourseSection } from "@/components/EnrolledCourseSection";
-import { EnrollmentUI } from "@/types/enrollment.ui";
+import { EnrolledCourseList } from "@/components/EnrolledCourseList";
 
 export default async function DashboardPage() {
   const user = await getCurrentUser();
@@ -49,15 +48,13 @@ export default async function DashboardPage() {
     ) / 60,
   );
 
-  const sortedCourses = enrollments
+  const coursesWithFavorites = enrollments
     .map((e) => ({
       ...e,
       isFavorite: favoriteIds.has(e.courseId),
     }))
     .sort(
-      (a, b) =>
-        Number(b.isFavorite) - Number(a.isFavorite) ||
-        b.course.updatedAt.getTime() - a.course.updatedAt.getTime(),
+      (a, b) => b.course.updatedAt.getTime() - a.course.updatedAt.getTime(),
     );
 
   const activeEnrollment =
@@ -74,7 +71,7 @@ export default async function DashboardPage() {
       </div>
 
       <div className="flex-1 w-full min-w-0 h-auto lg:h-104">
-        <EnrolledCourseSection courses={sortedCourses} />
+        <EnrolledCourseList courses={coursesWithFavorites} />
       </div>
 
       <div className="w-full lg:w-64 shrink-0">
