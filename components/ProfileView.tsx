@@ -8,8 +8,7 @@ import {
   Building2,
   Globe,
   Pencil,
-  Mail,
-  Hash
+  Mail
 } from "lucide-react";
 
 type ProfileViewProps = {
@@ -71,11 +70,6 @@ export default function ProfileView({ profile, user, onEdit }: ProfileViewProps)
               <Mail className="w-4 h-4" />
               {user.email}
             </p>
-            {profile?.bio && (
-              <p className="mt-4 text-slate-600 max-w-xl leading-relaxed">
-                {profile.bio}
-              </p>
-            )}
           </div>
           <button
             onClick={onEdit}
@@ -95,13 +89,6 @@ export default function ProfileView({ profile, user, onEdit }: ProfileViewProps)
             <h2 className="text-lg font-bold text-slate-900">Personal Information</h2>
           </div>
           <div className="px-6 divide-y divide-slate-100">
-            <InfoItem
-              icon={<Hash className="w-4 h-4" />}
-              label="User ID"
-              value={<span className="font-mono text-sm">{user.id}</span>}
-              colorClass="text-slate-600"
-              bgClass="bg-slate-100"
-            />
             <InfoItem
               icon={<UserIcon className="w-4 h-4" />}
               label="Full Name"
@@ -127,11 +114,18 @@ export default function ProfileView({ profile, user, onEdit }: ProfileViewProps)
               colorClass="text-emerald-600"
               bgClass="bg-emerald-100"
             />
+            <InfoItem
+              icon={<FileText className="w-4 h-4" />}
+              label="Bio"
+              value={profile?.bio}
+              colorClass="text-rose-600"
+              bgClass="bg-rose-100"
+            />
           </div>
         </div>
 
         {/* Company Information Card */}
-        <div className="bg-white border border-slate-200/60 rounded-2xl shadow-sm overflow-hidden">
+        <div className="bg-white border border-slate-200/60 rounded-2xl shadow-sm overflow-hidden h-fit">
           <div className="px-6 py-4 border-b border-slate-100">
             <h2 className="text-lg font-bold text-slate-900">Company Information</h2>
           </div>
