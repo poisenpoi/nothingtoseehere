@@ -96,7 +96,7 @@ export default function ProfileForm({ profile, user, onCancel }: ProfileFormProp
                 <button
                   type="button"
                   onClick={onCancel}
-                  className="flex items-center gap-2 px-5 py-2.5 bg-white/10 text-white font-medium rounded-full border border-white/20 shadow-md hover:shadow-xl transition-all duration-200"
+                  className="flex items-center gap-2 px-5 py-2.5 bg-white/10 text-white font-medium rounded-full border border-white/20 shadow-md hover:shadow-2xl transition-all duration-200"
                 >
                   <X className="w-4 h-4" />
                   Cancel
@@ -104,7 +104,7 @@ export default function ProfileForm({ profile, user, onCancel }: ProfileFormProp
                 <button
                   type="submit"
                   disabled={loading}
-                  className="flex items-center gap-2 px-5 py-2.5 bg-white text-eduBlue font-semibold rounded-full shadow-md hover:shadow-xl disabled:opacity-50 disabled:cursor-not-allowed disabled:hover:shadow-md transition-all duration-200"
+                  className="flex items-center gap-2 px-5 py-2.5 bg-white text-eduBlue font-semibold rounded-full shadow-md hover:shadow-2xl disabled:opacity-50 disabled:cursor-not-allowed disabled:hover:shadow-md transition-all duration-200"
                 >
                   {loading ? (
                     <Loader2 className="w-4 h-4 animate-spin" />

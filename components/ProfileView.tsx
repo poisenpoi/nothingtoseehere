@@ -64,7 +64,7 @@ export default function ProfileView({ profile, user, onEdit }: ProfileViewProps)
 
             <button
               onClick={onEdit}
-              className="flex items-center gap-2 px-5 py-2.5 bg-white text-eduBlue font-semibold rounded-full shadow-md hover:shadow-xl transition-all duration-200"
+              className="flex items-center gap-2 px-5 py-2.5 bg-white text-eduBlue font-semibold rounded-full shadow-md hover:shadow-2xl transition-all duration-200"
             >
               <Pencil className="w-4 h-4" />
               Edit Profile
