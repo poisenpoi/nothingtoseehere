@@ -3,12 +3,48 @@
 import { useState } from "react";
 import { useRouter } from "next/navigation";
 import { Profile, User } from "@prisma/client";
+import {
+  User as UserIcon,
+  Calendar,
+  Users,
+  FileText,
+  Building2,
+  Globe,
+  Image,
+  X,
+  Save,
+  Hash
+} from "lucide-react";
 
 type ProfileFormProps = {
   profile: Profile | null;
   user: User;
   onCancel: () => void;
 };
+
+interface FormFieldProps {
+  icon: React.ReactNode;
+  label: string;
+  colorClass?: string;
+  bgClass?: string;
+  children: React.ReactNode;
+}
+
+function FormField({ icon, label, colorClass = "text-eduBlue", bgClass = "bg-blue-100", children }: FormFieldProps) {
+  return (
+    <div className="flex items-start gap-4 py-4">
+      <div className={`w-10 h-10 rounded-full flex items-center justify-center shrink-0 ${bgClass} ${colorClass}`}>
+        {icon}
+      </div>
+      <div className="flex-1 min-w-0">
+        <label className="block text-xs font-semibold text-slate-400 uppercase tracking-wider mb-2">
+          {label}
+        </label>
+        {children}
+      </div>
+    </div>
+  );
+}
 
 export default function ProfileForm({ profile, user, onCancel }: ProfileFormProps) {
   const router = useRouter();
@@ -42,7 +78,7 @@ export default function ProfileForm({ profile, user, onCancel }: ProfileFormProp
         },
         body: JSON.stringify({
             ...formData,
-            gender: formData.gender === "" ? null : formData.gender 
+            gender: formData.gender === "" ? null : formData.gender
         }),
       });
 
@@ -60,147 +96,200 @@ export default function ProfileForm({ profile, user, onCancel }: ProfileFormProp
     }
   };
 
+  const inputClassName = "w-full rounded-xl border border-slate-200 bg-white px-4 py-2.5 text-sm text-slate-900 placeholder:text-slate-400 focus:border-eduBlue focus:ring-2 focus:ring-eduBlue/20 focus:outline-none transition-all";
+
   return (
-    <form onSubmit={handleSubmit} className="space-y-6 bg-white shadow rounded-lg p-6">
-      <div className="border-b border-gray-200 pb-4 mb-4">
-        <h3 className="text-lg font-medium leading-6 text-gray-900">Edit Profile</h3>
-      </div>
-
-      <div>
-        <label className="block text-sm font-medium text-gray-700">ID</label>
-        <input
-          type="text"
-          value={user.id}
-          disabled
-          className="mt-1 block w-full rounded-md border-gray-300 bg-gray-100 shadow-sm sm:text-sm px-3 py-2 cursor-not-allowed text-gray-500"
-        />
-      </div>
-
-      <div>
-        <label htmlFor="pictureUrl" className="block text-sm font-medium text-gray-700">
-          Picture URL
-        </label>
-        <div className="mt-1 flex items-center gap-4">
-          {formData.pictureUrl && (
-            <img 
-              src={formData.pictureUrl} 
-              alt="Preview" 
-              className="h-12 w-12 rounded-full object-cover"
+    <form onSubmit={handleSubmit} className="space-y-6">
+      {/* Header Card */}
+      <div className="bg-slate-50 border border-slate-100 rounded-2xl p-6 sm:p-8">
+        <div className="flex flex-col sm:flex-row items-center sm:items-start gap-6">
+          <div className="relative">
+            <img
+              src={formData.pictureUrl || "/avatars/male.svg"}
+              alt="Profile"
+              className="h-24 w-24 sm:h-28 sm:w-28 rounded-full object-cover border-4 border-white shadow-lg"
             />
-          )}
-          <input
-            type="text"
-            name="pictureUrl"
-            id="pictureUrl"
-            value={formData.pictureUrl}
-            onChange={handleChange}
-            className="block w-full rounded-md border-gray-300 shadow-sm focus:border-eduBlue focus:ring-eduBlue sm:text-sm px-3 py-2 border"
-          />
+          </div>
+          <div className="flex-1 text-center sm:text-left">
+            <h1 className="text-3xl sm:text-4xl font-extrabold tracking-tight text-slate-900">
+              Edit Profile
+            </h1>
+            <p className="mt-1 text-slate-500">
+              Update your personal and company information
+            </p>
+          </div>
+          <div className="flex gap-3">
+            <button
+              type="button"
+              onClick={onCancel}
+              className="inline-flex items-center gap-2 rounded-xl border border-slate-200 bg-white py-2.5 px-5 text-sm font-semibold text-slate-700 shadow-sm hover:bg-slate-50 focus:outline-none focus:ring-2 focus:ring-slate-200 focus:ring-offset-2 transition-all"
+            >
+              <X className="w-4 h-4" />
+              Cancel
+            </button>
+            <button
+              type="submit"
+              disabled={loading}
+              className="inline-flex items-center gap-2 rounded-xl bg-eduBlue py-2.5 px-5 text-sm font-semibold text-white shadow-sm hover:opacity-90 focus:outline-none focus:ring-2 focus:ring-eduBlue focus:ring-offset-2 transition-all disabled:opacity-50"
+            >
+              <Save className="w-4 h-4" />
+              {loading ? "Saving..." : "Save Changes"}
+            </button>
+          </div>
         </div>
       </div>
 
-      <div>
-        <label htmlFor="name" className="block text-sm font-medium text-gray-700">
-          Name
-        </label>
-        <input
-          type="text"
-          name="name"
-          id="name"
-          value={formData.name}
-          onChange={handleChange}
-          className="mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-eduBlue focus:ring-eduBlue sm:text-sm px-3 py-2 border"
-        />
-      </div>
+      {/* Form Cards Grid */}
+      <div className="grid grid-cols-1 lg:grid-cols-2 gap-6">
+        {/* Personal Information Card */}
+        <div className="bg-white border border-slate-200/60 rounded-2xl shadow-sm overflow-hidden">
+          <div className="px-6 py-4 border-b border-slate-100">
+            <h2 className="text-lg font-bold text-slate-900">Personal Information</h2>
+          </div>
+          <div className="px-6 divide-y divide-slate-100">
+            <FormField
+              icon={<Hash className="w-4 h-4" />}
+              label="User ID"
+              colorClass="text-slate-600"
+              bgClass="bg-slate-100"
+            >
+              <input
+                type="text"
+                value={user.id}
+                disabled
+                className="w-full rounded-xl border border-slate-200 bg-slate-50 px-4 py-2.5 text-sm text-slate-500 font-mono cursor-not-allowed"
+              />
+            </FormField>
 
-      <div>
-        <label htmlFor="dob" className="block text-sm font-medium text-gray-700">
-          Date of Birth
-        </label>
-        <input
-          type="date"
-          name="dob"
-          id="dob"
-          value={formData.dob}
-          onChange={handleChange}
-          className="mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-eduBlue focus:ring-eduBlue sm:text-sm px-3 py-2 border"
-        />
-      </div>
+            <FormField
+              icon={<Image className="w-4 h-4" />}
+              label="Picture URL"
+              colorClass="text-indigo-600"
+              bgClass="bg-indigo-100"
+            >
+              <input
+                type="text"
+                name="pictureUrl"
+                id="pictureUrl"
+                value={formData.pictureUrl}
+                onChange={handleChange}
+                placeholder="https://example.com/photo.jpg"
+                className={inputClassName}
+              />
+            </FormField>
 
-      <div>
-        <label htmlFor="gender" className="block text-sm font-medium text-gray-700">
-          Gender
-        </label>
-        <select
-          name="gender"
-          id="gender"
-          value={formData.gender}
-          onChange={handleChange}
-          className="mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-eduBlue focus:ring-eduBlue sm:text-sm px-3 py-2 border"
-        >
-          <option value="">Select Gender</option>
-          <option value="MALE">Male</option>
-          <option value="FEMALE">Female</option>
-        </select>
-      </div>
+            <FormField
+              icon={<UserIcon className="w-4 h-4" />}
+              label="Full Name"
+              colorClass="text-eduBlue"
+              bgClass="bg-blue-100"
+            >
+              <input
+                type="text"
+                name="name"
+                id="name"
+                value={formData.name}
+                onChange={handleChange}
+                placeholder="Enter your full name"
+                className={inputClassName}
+              />
+            </FormField>
 
-      <div>
-        <label htmlFor="bio" className="block text-sm font-medium text-gray-700">
-          Bio
-        </label>
-        <textarea
-          name="bio"
-          id="bio"
-          rows={3}
-          value={formData.bio}
-          onChange={handleChange}
-          className="mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-eduBlue focus:ring-eduBlue sm:text-sm px-3 py-2 border"
-        />
-      </div>
+            <FormField
+              icon={<Calendar className="w-4 h-4" />}
+              label="Date of Birth"
+              colorClass="text-purple-600"
+              bgClass="bg-purple-100"
+            >
+              <input
+                type="date"
+                name="dob"
+                id="dob"
+                value={formData.dob}
+                onChange={handleChange}
+                className={inputClassName}
+              />
+            </FormField>
 
-      <div>
-        <label htmlFor="companyName" className="block text-sm font-medium text-gray-700">
-          Company Name
-        </label>
-        <input
-          type="text"
-          name="companyName"
-          id="companyName"
-          value={formData.companyName}
-          onChange={handleChange}
-          className="mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-eduBlue focus:ring-eduBlue sm:text-sm px-3 py-2 border"
-        />
-      </div>
+            <FormField
+              icon={<Users className="w-4 h-4" />}
+              label="Gender"
+              colorClass="text-emerald-600"
+              bgClass="bg-emerald-100"
+            >
+              <select
+                name="gender"
+                id="gender"
+                value={formData.gender}
+                onChange={handleChange}
+                className={inputClassName}
+              >
+                <option value="">Select Gender</option>
+                <option value="MALE">Male</option>
+                <option value="FEMALE">Female</option>
+              </select>
+            </FormField>
+          </div>
+        </div>
 
-      <div>
-        <label htmlFor="companyWebsite" className="block text-sm font-medium text-gray-700">
-          Company Website
-        </label>
-        <input
-          type="text"
-          name="companyWebsite"
-          id="companyWebsite"
-          value={formData.companyWebsite}
-          onChange={handleChange}
-          className="mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-eduBlue focus:ring-eduBlue sm:text-sm px-3 py-2 border"
-        />
-      </div>
+        {/* Company Information Card */}
+        <div className="bg-white border border-slate-200/60 rounded-2xl shadow-sm overflow-hidden">
+          <div className="px-6 py-4 border-b border-slate-100">
+            <h2 className="text-lg font-bold text-slate-900">Company Information</h2>
+          </div>
+          <div className="px-6 divide-y divide-slate-100">
+            <FormField
+              icon={<Building2 className="w-4 h-4" />}
+              label="Company Name"
+              colorClass="text-amber-600"
+              bgClass="bg-amber-100"
+            >
+              <input
+                type="text"
+                name="companyName"
+                id="companyName"
+                value={formData.companyName}
+                onChange={handleChange}
+                placeholder="Enter company name"
+                className={inputClassName}
+              />
+            </FormField>
 
-      <div className="flex justify-end gap-3">
-        <button
-          type="button"
-          onClick={onCancel}
-          className="inline-flex justify-center rounded-md border border-gray-300 bg-white py-2 px-4 text-sm font-medium text-gray-700 shadow-sm hover:bg-gray-50 focus:outline-none focus:ring-2 focus:ring-eduBlue focus:ring-offset-2"
-        >
-          Cancel
-        </button>
-        <button
-          type="submit"
-          disabled={loading}
-          className="inline-flex justify-center rounded-md border border-transparent bg-eduBlue py-2 px-4 text-sm font-medium text-white shadow-sm hover:opacity-90 focus:outline-none focus:ring-2 focus:ring-eduBlue focus:ring-offset-2 disabled:opacity-50"
-        >
-          {loading ? "Saving..." : "Save Profile"}
-        </button>
+            <FormField
+              icon={<Globe className="w-4 h-4" />}
+              label="Company Website"
+              colorClass="text-cyan-600"
+              bgClass="bg-cyan-100"
+            >
+              <input
+                type="text"
+                name="companyWebsite"
+                id="companyWebsite"
+                value={formData.companyWebsite}
+                onChange={handleChange}
+                placeholder="https://example.com"
+                className={inputClassName}
+              />
+            </FormField>
+
+            <FormField
+              icon={<FileText className="w-4 h-4" />}
+              label="Bio"
+              colorClass="text-rose-600"
+              bgClass="bg-rose-100"
+            >
+              <textarea
+                name="bio"
+                id="bio"
+                rows={4}
+                value={formData.bio}
+                onChange={handleChange}
+                placeholder="Tell us about yourself..."
+                className={inputClassName + " resize-none"}
+              />
+            </FormField>
+          </div>
+        </div>
       </div>
     </form>
   );

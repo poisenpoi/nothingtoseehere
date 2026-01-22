@@ -24,8 +24,8 @@ export default async function ProfilePage() {
   }
 
   return (
-    <div className="max-w-4xl mx-auto py-10 px-4 sm:px-6 lg:px-8">
+    <main className="bg-white min-h-screen max-w-7xl mx-auto px-6 py-6 lg:px-8">
       <ProfileContainer user={userData} profile={userData.profile} />
-    </div>
+    </main>
   );
 }
