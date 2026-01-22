@@ -51,7 +51,7 @@ export default function ProfileView({ profile, user, onEdit }: ProfileViewProps)
         <div className="relative px-6 py-16 sm:px-8 lg:px-12">
           <div className="max-w-5xl mx-auto">
             <div className="flex flex-col sm:flex-row items-center gap-8">
-              {/* Avatar - matching header style */}
+              {/* Avatar */}
               <img
                 src={profile?.pictureUrl || "/avatars/male.svg"}
                 alt="Avatar"
@@ -67,11 +67,6 @@ export default function ProfileView({ profile, user, onEdit }: ProfileViewProps)
                   <Mail className="w-4 h-4" />
                   <span className="text-sm sm:text-base">{user.email}</span>
                 </div>
-                {profile?.bio && (
-                  <p className="mt-4 text-white/70 text-sm sm:text-base max-w-lg line-clamp-2">
-                    {profile.bio}
-                  </p>
-                )}
               </div>
 
               {/* Edit Button */}
@@ -89,7 +84,8 @@ export default function ProfileView({ profile, user, onEdit }: ProfileViewProps)
 
       {/* Content Section */}
       <div className="px-6 py-12 sm:px-8 lg:px-12">
-        <div className="max-w-5xl mx-auto">
+        <div className="max-w-5xl mx-auto space-y-8">
+          {/* Two Column Cards */}
           <div className="grid grid-cols-1 lg:grid-cols-2 gap-8">
             {/* Personal Details Card */}
             <div className="bg-white rounded-3xl shadow-sm border border-slate-100 overflow-hidden hover:shadow-md transition-shadow">
@@ -130,20 +126,11 @@ export default function ProfileView({ profile, user, onEdit }: ProfileViewProps)
                   iconBg="bg-rose-50"
                   iconColor="text-rose-600"
                 />
-                {profile?.bio && (
-                  <DetailItem
-                    icon={<FileText className="w-4 h-4" />}
-                    label="Bio"
-                    value={profile.bio}
-                    iconBg="bg-amber-50"
-                    iconColor="text-amber-600"
-                  />
-                )}
               </div>
             </div>
 
             {/* Company Card */}
-            <div className="bg-white rounded-3xl shadow-sm border border-slate-100 overflow-hidden hover:shadow-md transition-shadow h-fit">
+            <div className="bg-white rounded-3xl shadow-sm border border-slate-100 overflow-hidden hover:shadow-md transition-shadow flex flex-col">
               <div className="px-6 py-5 bg-gradient-to-r from-slate-50 to-white border-b border-slate-100">
                 <div className="flex items-center gap-3">
                   <div className="p-2 bg-indigo-50 rounded-xl">
@@ -152,7 +139,7 @@ export default function ProfileView({ profile, user, onEdit }: ProfileViewProps)
                   <h2 className="text-lg font-semibold text-slate-900">Company</h2>
                 </div>
               </div>
-              <div className="p-6 space-y-5">
+              <div className="p-6 space-y-5 flex-1 flex flex-col">
                 {(profile?.companyName || profile?.companyWebsite) ? (
                   <>
                     <DetailItem
@@ -162,20 +149,16 @@ export default function ProfileView({ profile, user, onEdit }: ProfileViewProps)
                       iconBg="bg-orange-50"
                       iconColor="text-orange-600"
                     />
-                    {profile?.companyWebsite && (
-                      <div className="flex items-start gap-3">
-                        <div className="p-2 rounded-lg bg-cyan-50 text-cyan-600 shrink-0">
-                          <Globe className="w-4 h-4" />
-                        </div>
-                        <div className="min-w-0">
-                          <p className="text-xs font-medium text-slate-400 uppercase tracking-wider">
-                            Website
-                          </p>
+                    <DetailItem
+                      icon={<Globe className="w-4 h-4" />}
+                      label="Website"
+                      value={
+                        profile?.companyWebsite ? (
                           <a
                             href={websiteUrl}
                             target="_blank"
                             rel="noopener noreferrer"
-                            className="inline-flex items-center gap-1.5 text-eduBlue hover:text-blue-700 mt-0.5 transition-colors"
+                            className="inline-flex items-center gap-1.5 text-eduBlue hover:text-blue-700 transition-colors"
                           >
                             {profile.companyWebsite}
                             <svg
@@ -192,19 +175,44 @@ export default function ProfileView({ profile, user, onEdit }: ProfileViewProps)
                               />
                             </svg>
                           </a>
-                        </div>
-                      </div>
-                    )}
+                        ) : null
+                      }
+                      iconBg="bg-cyan-50"
+                      iconColor="text-cyan-600"
+                    />
                   </>
                 ) : (
-                  <div className="text-center py-6">
-                    <div className="w-12 h-12 mx-auto mb-3 rounded-full bg-slate-100 flex items-center justify-center">
-                      <Building2 className="w-6 h-6 text-slate-400" />
+                  <div className="flex-1 flex items-center justify-center">
+                    <div className="text-center py-6">
+                      <div className="w-12 h-12 mx-auto mb-3 rounded-full bg-slate-100 flex items-center justify-center">
+                        <Building2 className="w-6 h-6 text-slate-400" />
+                      </div>
+                      <p className="text-sm text-slate-500">No company info added yet</p>
                     </div>
-                    <p className="text-sm text-slate-500">No company info added yet</p>
                   </div>
                 )}
               </div>
+            </div>
+          </div>
+
+          {/* Bio Card - Full Width */}
+          <div className="bg-white rounded-3xl shadow-sm border border-slate-100 overflow-hidden hover:shadow-md transition-shadow">
+            <div className="px-6 py-5 bg-gradient-to-r from-slate-50 to-white border-b border-slate-100">
+              <div className="flex items-center gap-3">
+                <div className="p-2 bg-amber-50 rounded-xl">
+                  <FileText className="w-5 h-5 text-amber-600" />
+                </div>
+                <h2 className="text-lg font-semibold text-slate-900">About Me</h2>
+              </div>
+            </div>
+            <div className="p-6">
+              {profile?.bio ? (
+                <p className="text-slate-600 leading-relaxed whitespace-pre-wrap">
+                  {profile.bio}
+                </p>
+              ) : (
+                <p className="text-slate-400 italic">No bio added yet</p>
+              )}
             </div>
           </div>
         </div>
@@ -222,7 +230,7 @@ function DetailItem({
 }: {
   icon: React.ReactNode;
   label: string;
-  value: string | null | undefined;
+  value: string | React.ReactNode | null | undefined;
   iconBg: string;
   iconColor: string;
 }) {
@@ -231,9 +239,9 @@ function DetailItem({
       <div className={`p-2 rounded-lg ${iconBg} ${iconColor} shrink-0`}>{icon}</div>
       <div className="min-w-0">
         <p className="text-xs font-medium text-slate-400 uppercase tracking-wider">{label}</p>
-        <p className="text-slate-900 mt-0.5 break-words">
+        <div className="text-slate-900 mt-0.5 break-words">
           {value || <span className="text-slate-400">Not provided</span>}
-        </p>
+        </div>
       </div>
     </div>
   );

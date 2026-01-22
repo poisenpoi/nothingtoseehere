@@ -82,7 +82,7 @@ export default function ProfileForm({ profile, user, onCancel }: ProfileFormProp
         <div className="relative px-6 py-12 sm:px-8 lg:px-12">
           <div className="max-w-5xl mx-auto">
             <div className="flex flex-col sm:flex-row items-center gap-8">
-              {/* Avatar - matching header style */}
+              {/* Avatar */}
               <img
                 src={formData.pictureUrl || "/avatars/male.svg"}
                 alt="Avatar"
@@ -129,7 +129,8 @@ export default function ProfileForm({ profile, user, onCancel }: ProfileFormProp
 
       {/* Form Content */}
       <div className="px-6 py-12 sm:px-8 lg:px-12">
-        <div className="max-w-5xl mx-auto">
+        <div className="max-w-5xl mx-auto space-y-8">
+          {/* Two Column Cards */}
           <div className="grid grid-cols-1 lg:grid-cols-2 gap-8">
             {/* Personal Information Card */}
             <div className="bg-white rounded-3xl shadow-sm border border-slate-100 overflow-hidden">
@@ -212,28 +213,11 @@ export default function ProfileForm({ profile, user, onCancel }: ProfileFormProp
                     </select>
                   </FormField>
                 </div>
-
-                {/* Bio */}
-                <FormField
-                  icon={<FileText className="w-4 h-4" />}
-                  label="Bio"
-                  iconBg="bg-amber-50"
-                  iconColor="text-amber-600"
-                >
-                  <textarea
-                    name="bio"
-                    rows={4}
-                    value={formData.bio}
-                    onChange={handleChange}
-                    placeholder="Tell us a bit about yourself..."
-                    className="form-input resize-none"
-                  />
-                </FormField>
               </div>
             </div>
 
             {/* Company Information Card */}
-            <div className="bg-white rounded-3xl shadow-sm border border-slate-100 overflow-hidden h-fit">
+            <div className="bg-white rounded-3xl shadow-sm border border-slate-100 overflow-hidden">
               <div className="px-6 py-5 bg-gradient-to-r from-slate-50 to-white border-b border-slate-100">
                 <div className="flex items-center gap-3">
                   <div className="p-2 bg-indigo-50 rounded-xl">
@@ -277,6 +261,28 @@ export default function ProfileForm({ profile, user, onCancel }: ProfileFormProp
                   />
                 </FormField>
               </div>
+            </div>
+          </div>
+
+          {/* Bio Card - Full Width */}
+          <div className="bg-white rounded-3xl shadow-sm border border-slate-100 overflow-hidden">
+            <div className="px-6 py-5 bg-gradient-to-r from-slate-50 to-white border-b border-slate-100">
+              <div className="flex items-center gap-3">
+                <div className="p-2 bg-amber-50 rounded-xl">
+                  <FileText className="w-5 h-5 text-amber-600" />
+                </div>
+                <h2 className="text-lg font-semibold text-slate-900">About Me</h2>
+              </div>
+            </div>
+            <div className="p-6">
+              <textarea
+                name="bio"
+                rows={4}
+                value={formData.bio}
+                onChange={handleChange}
+                placeholder="Tell us a bit about yourself..."
+                className="form-input resize-none"
+              />
             </div>
           </div>
         </div>
