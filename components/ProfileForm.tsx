@@ -74,19 +74,16 @@ export default function ProfileForm({ profile, user, onCancel }: ProfileFormProp
 
   return (
     <form onSubmit={handleSubmit} className="min-h-screen bg-gradient-to-br from-slate-50 via-white to-blue-50/30">
-      {/* Hero Section */}
       <div className="bg-eduBlue">
         <div className="px-6 py-8 sm:px-8 lg:px-12">
           <div className="max-w-5xl mx-auto">
             <div className="flex flex-col sm:flex-row items-center gap-6">
-              {/* Avatar */}
               <img
                 src={formData.pictureUrl || "/avatars/male.svg"}
                 alt="Avatar"
                 className="h-24 w-24 sm:h-28 sm:w-28 rounded-full object-cover bg-white"
               />
 
-              {/* Title */}
               <div className="flex-1 text-center sm:text-left">
                 <h1 className="text-2xl sm:text-3xl font-bold text-white tracking-tight">
                   Edit Profile
@@ -96,7 +93,6 @@ export default function ProfileForm({ profile, user, onCancel }: ProfileFormProp
                 </p>
               </div>
 
-              {/* Action Buttons */}
               <div className="flex items-center gap-3">
                 <button
                   type="button"
@@ -124,12 +120,9 @@ export default function ProfileForm({ profile, user, onCancel }: ProfileFormProp
         </div>
       </div>
 
-      {/* Form Content */}
       <div className="px-6 py-12 sm:px-8 lg:px-12">
         <div className="max-w-5xl mx-auto space-y-8">
-          {/* Two Column Cards */}
           <div className="grid grid-cols-1 lg:grid-cols-2 gap-8">
-            {/* Personal Information Card */}
             <div className="bg-white rounded-3xl shadow-sm border border-slate-100 overflow-hidden">
               <div className="px-6 py-5 bg-gradient-to-r from-slate-50 to-white border-b border-slate-100">
                 <div className="flex items-center gap-3">
@@ -140,7 +133,6 @@ export default function ProfileForm({ profile, user, onCancel }: ProfileFormProp
                 </div>
               </div>
               <div className="p-6 space-y-6">
-                {/* Picture URL */}
                 <FormField
                   icon={<Image className="w-4 h-4" />}
                   label="Profile Picture URL"
@@ -157,7 +149,6 @@ export default function ProfileForm({ profile, user, onCancel }: ProfileFormProp
                   />
                 </FormField>
 
-                {/* Full Name */}
                 <FormField
                   icon={<UserIcon className="w-4 h-4" />}
                   label="Full Name"
@@ -175,7 +166,6 @@ export default function ProfileForm({ profile, user, onCancel }: ProfileFormProp
                 </FormField>
 
                 <div className="grid grid-cols-1 sm:grid-cols-2 gap-6">
-                  {/* Date of Birth */}
                   <FormField
                     icon={<Calendar className="w-4 h-4" />}
                     label="Date of Birth"
@@ -191,7 +181,6 @@ export default function ProfileForm({ profile, user, onCancel }: ProfileFormProp
                     />
                   </FormField>
 
-                  {/* Gender */}
                   <FormField
                     icon={<Users className="w-4 h-4" />}
                     label="Gender"
@@ -213,7 +202,6 @@ export default function ProfileForm({ profile, user, onCancel }: ProfileFormProp
               </div>
             </div>
 
-            {/* Company Information Card */}
             <div className="bg-white rounded-3xl shadow-sm border border-slate-100 overflow-hidden">
               <div className="px-6 py-5 bg-gradient-to-r from-slate-50 to-white border-b border-slate-100">
                 <div className="flex items-center gap-3">
@@ -224,7 +212,7 @@ export default function ProfileForm({ profile, user, onCancel }: ProfileFormProp
                 </div>
               </div>
               <div className="p-6 space-y-6">
-                {/* Company Name */}
+
                 <FormField
                   icon={<Building2 className="w-4 h-4" />}
                   label="Company Name"
@@ -241,7 +229,6 @@ export default function ProfileForm({ profile, user, onCancel }: ProfileFormProp
                   />
                 </FormField>
 
-                {/* Company Website */}
                 <FormField
                   icon={<Globe className="w-4 h-4" />}
                   label="Company Website"
@@ -261,7 +248,6 @@ export default function ProfileForm({ profile, user, onCancel }: ProfileFormProp
             </div>
           </div>
 
-          {/* Bio Card - Full Width */}
           <div className="bg-white rounded-3xl shadow-sm border border-slate-100 overflow-hidden">
             <div className="px-6 py-5 bg-gradient-to-r from-slate-50 to-white border-b border-slate-100">
               <div className="flex items-center gap-3">

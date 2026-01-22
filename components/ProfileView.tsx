@@ -43,19 +43,16 @@ export default function ProfileView({ profile, user, onEdit }: ProfileViewProps)
 
   return (
     <div className="min-h-screen bg-gradient-to-br from-slate-50 via-white to-blue-50/30">
-      {/* Hero Section */}
       <div className="bg-eduBlue">
         <div className="px-6 py-8 sm:px-8 lg:px-12">
           <div className="max-w-5xl mx-auto">
             <div className="flex flex-col sm:flex-row items-center gap-6">
-              {/* Avatar */}
               <img
                 src={profile?.pictureUrl || "/avatars/male.svg"}
                 alt="Avatar"
                 className="h-24 w-24 sm:h-28 sm:w-28 rounded-full object-cover bg-white"
               />
 
-              {/* Name & Email */}
               <div className="flex-1 text-center sm:text-left">
                 <h1 className="text-2xl sm:text-3xl font-bold text-white tracking-tight">
                   {displayName}
@@ -66,7 +63,6 @@ export default function ProfileView({ profile, user, onEdit }: ProfileViewProps)
                 </div>
               </div>
 
-              {/* Edit Button */}
               <button
                 onClick={onEdit}
                 className="flex items-center gap-2 px-5 py-2.5 bg-white text-eduBlue font-semibold rounded-full shadow-md hover:shadow-lg transition-all"
@@ -79,12 +75,9 @@ export default function ProfileView({ profile, user, onEdit }: ProfileViewProps)
         </div>
       </div>
 
-      {/* Content Section */}
       <div className="px-6 py-12 sm:px-8 lg:px-12">
         <div className="max-w-5xl mx-auto space-y-8">
-          {/* Two Column Cards */}
           <div className="grid grid-cols-1 lg:grid-cols-3 gap-8">
-            {/* Personal Details Card */}
             <div className="lg:col-span-2 bg-white rounded-3xl shadow-sm border border-slate-100 overflow-hidden hover:shadow-md transition-shadow">
               <div className="px-6 py-5 bg-gradient-to-r from-slate-50 to-white border-b border-slate-100">
                 <div className="flex items-center gap-3">
@@ -95,9 +88,8 @@ export default function ProfileView({ profile, user, onEdit }: ProfileViewProps)
                 </div>
               </div>
               <div className="p-6">
-                {/* Two sub-columns inside Personal Details */}
                 <div className="grid grid-cols-1 md:grid-cols-2 gap-x-8 gap-y-5">
-                  {/* Left sub-column */}
+
                   <div className="space-y-5">
                     <DetailItem
                       icon={<UserIcon className="w-4 h-4" />}
@@ -114,7 +106,6 @@ export default function ProfileView({ profile, user, onEdit }: ProfileViewProps)
                       iconColor="text-purple-600"
                     />
                   </div>
-                  {/* Right sub-column */}
                   <div className="space-y-5">
                     <DetailItem
                       icon={<Users className="w-4 h-4" />}
@@ -135,7 +126,6 @@ export default function ProfileView({ profile, user, onEdit }: ProfileViewProps)
               </div>
             </div>
 
-            {/* Company Card */}
             <div className="lg:col-span-1 bg-white rounded-3xl shadow-sm border border-slate-100 overflow-hidden hover:shadow-md transition-shadow flex flex-col">
               <div className="px-6 py-5 bg-gradient-to-r from-slate-50 to-white border-b border-slate-100">
                 <div className="flex items-center gap-3">
@@ -201,7 +191,6 @@ export default function ProfileView({ profile, user, onEdit }: ProfileViewProps)
             </div>
           </div>
 
-          {/* Bio Card - Full Width */}
           <div className="bg-white rounded-3xl shadow-sm border border-slate-100 overflow-hidden hover:shadow-md transition-shadow">
             <div className="px-6 py-5 bg-gradient-to-r from-slate-50 to-white border-b border-slate-100">
               <div className="flex items-center gap-3">
