@@ -75,26 +75,23 @@ export default function ProfileForm({ profile, user, onCancel }: ProfileFormProp
   return (
     <form onSubmit={handleSubmit} className="min-h-screen bg-gradient-to-br from-slate-50 via-white to-blue-50/30">
       {/* Hero Section */}
-      <div className="relative overflow-hidden">
-        <div className="absolute inset-0 bg-gradient-to-r from-slate-700 via-slate-800 to-slate-900" />
-        <div className="absolute inset-0 bg-[url('data:image/svg+xml;base64,PHN2ZyB3aWR0aD0iNjAiIGhlaWdodD0iNjAiIHZpZXdCb3g9IjAgMCA2MCA2MCIgeG1sbnM9Imh0dHA6Ly93d3cudzMub3JnLzIwMDAvc3ZnIj48ZyBmaWxsPSJub25lIiBmaWxsLXJ1bGU9ImV2ZW5vZGQiPjxnIGZpbGw9IiNmZmZmZmYiIGZpbGwtb3BhY2l0eT0iMC4wNSI+PHBhdGggZD0iTTM2IDM0djItSDI0di0yaDEyek0zNiAyNHYySDI0di0yaDEyeiIvPjwvZz48L2c+PC9zdmc+')] opacity-50" />
-
-        <div className="relative px-6 py-12 sm:px-8 lg:px-12">
+      <div className="bg-eduBlue">
+        <div className="px-6 py-8 sm:px-8 lg:px-12">
           <div className="max-w-5xl mx-auto">
-            <div className="flex flex-col sm:flex-row items-center gap-8">
+            <div className="flex flex-col sm:flex-row items-center gap-6">
               {/* Avatar */}
               <img
                 src={formData.pictureUrl || "/avatars/male.svg"}
                 alt="Avatar"
-                className="h-28 w-28 sm:h-32 sm:w-32 rounded-full object-cover bg-white"
+                className="h-24 w-24 sm:h-28 sm:w-28 rounded-full object-cover bg-white"
               />
 
               {/* Title */}
               <div className="flex-1 text-center sm:text-left">
-                <h1 className="text-3xl sm:text-4xl font-bold text-white tracking-tight">
+                <h1 className="text-2xl sm:text-3xl font-bold text-white tracking-tight">
                   Edit Profile
                 </h1>
-                <p className="mt-2 text-white/60 text-sm sm:text-base">
+                <p className="mt-1 text-white/70 text-sm">
                   Update your personal information and company details
                 </p>
               </div>
@@ -104,7 +101,7 @@ export default function ProfileForm({ profile, user, onCancel }: ProfileFormProp
                 <button
                   type="button"
                   onClick={onCancel}
-                  className="flex items-center gap-2 px-5 py-2.5 bg-white/10 backdrop-blur-sm text-white font-medium rounded-full border border-white/20 hover:bg-white/20 transition-all"
+                  className="flex items-center gap-2 px-5 py-2.5 bg-white/10 text-white font-medium rounded-full border border-white/20 hover:bg-white/20 transition-all"
                 >
                   <X className="w-4 h-4" />
                   Cancel
@@ -112,7 +109,7 @@ export default function ProfileForm({ profile, user, onCancel }: ProfileFormProp
                 <button
                   type="submit"
                   disabled={loading}
-                  className="flex items-center gap-2 px-6 py-2.5 bg-eduBlue text-white font-semibold rounded-full shadow-lg hover:bg-blue-600 hover:shadow-xl disabled:opacity-50 disabled:cursor-not-allowed transition-all"
+                  className="flex items-center gap-2 px-5 py-2.5 bg-white text-eduBlue font-semibold rounded-full shadow-md hover:shadow-lg disabled:opacity-50 disabled:cursor-not-allowed transition-all"
                 >
                   {loading ? (
                     <Loader2 className="w-4 h-4 animate-spin" />
