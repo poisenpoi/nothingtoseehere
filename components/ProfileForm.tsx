@@ -75,8 +75,7 @@ export default function ProfileForm({ profile, user, onCancel }: ProfileFormProp
   return (
     <form onSubmit={handleSubmit} className="min-h-screen bg-gradient-to-br from-slate-50 via-white to-blue-50/30">
       <div className="bg-eduBlue">
-        <div className="px-6 py-8 sm:px-8 lg:px-12">
-          <div className="max-w-5xl mx-auto">
+        <div className="mx-auto max-w-7xl px-6 py-8 lg:px-8">
             <div className="flex flex-col sm:flex-row items-center gap-6">
               <img
                 src={formData.pictureUrl || "/avatars/male.svg"}
@@ -97,7 +96,7 @@ export default function ProfileForm({ profile, user, onCancel }: ProfileFormProp
                 <button
                   type="button"
                   onClick={onCancel}
-                  className="flex items-center gap-2 px-5 py-2.5 bg-white/10 text-white font-medium rounded-full border border-white/20 hover:bg-white/25 hover:scale-105 active:scale-95 transition-all duration-200"
+                  className="flex items-center gap-2 px-5 py-2.5 bg-white/10 text-white font-medium rounded-full border border-white/20 shadow-md hover:shadow-xl transition-all duration-200"
                 >
                   <X className="w-4 h-4" />
                   Cancel
@@ -105,7 +104,7 @@ export default function ProfileForm({ profile, user, onCancel }: ProfileFormProp
                 <button
                   type="submit"
                   disabled={loading}
-                  className="flex items-center gap-2 px-5 py-2.5 bg-white text-eduBlue font-semibold rounded-full shadow-md hover:shadow-xl hover:scale-105 active:scale-95 disabled:opacity-50 disabled:cursor-not-allowed disabled:hover:scale-100 disabled:hover:shadow-md transition-all duration-200"
+                  className="flex items-center gap-2 px-5 py-2.5 bg-white text-eduBlue font-semibold rounded-full shadow-md hover:shadow-xl disabled:opacity-50 disabled:cursor-not-allowed disabled:hover:shadow-md transition-all duration-200"
                 >
                   {loading ? (
                     <Loader2 className="w-4 h-4 animate-spin" />
@@ -114,14 +113,12 @@ export default function ProfileForm({ profile, user, onCancel }: ProfileFormProp
                   )}
                   {loading ? "Saving..." : "Save Changes"}
                 </button>
-              </div>
             </div>
           </div>
         </div>
       </div>
 
-      <div className="px-6 py-12 sm:px-8 lg:px-12">
-        <div className="max-w-5xl mx-auto space-y-8">
+      <div className="mx-auto max-w-7xl px-6 py-12 lg:px-8 space-y-8">
           <div className="grid grid-cols-1 lg:grid-cols-2 gap-8">
             <div className="bg-white rounded-3xl shadow-sm border border-slate-100 overflow-hidden">
               <div className="px-6 py-5 bg-gradient-to-r from-slate-50 to-white border-b border-slate-100">
@@ -248,25 +245,24 @@ export default function ProfileForm({ profile, user, onCancel }: ProfileFormProp
             </div>
           </div>
 
-          <div className="bg-white rounded-3xl shadow-sm border border-slate-100 overflow-hidden">
-            <div className="px-6 py-5 bg-gradient-to-r from-slate-50 to-white border-b border-slate-100">
-              <div className="flex items-center gap-3">
-                <div className="p-2 bg-amber-50 rounded-xl">
-                  <FileText className="w-5 h-5 text-amber-600" />
-                </div>
-                <h2 className="text-lg font-semibold text-slate-900">About Me</h2>
+        <div className="bg-white rounded-3xl shadow-sm border border-slate-100 overflow-hidden">
+          <div className="px-6 py-5 bg-gradient-to-r from-slate-50 to-white border-b border-slate-100">
+            <div className="flex items-center gap-3">
+              <div className="p-2 bg-amber-50 rounded-xl">
+                <FileText className="w-5 h-5 text-amber-600" />
               </div>
+              <h2 className="text-lg font-semibold text-slate-900">About Me</h2>
             </div>
-            <div className="p-6">
-              <textarea
-                name="bio"
-                rows={4}
-                value={formData.bio}
-                onChange={handleChange}
-                placeholder="Tell us a bit about yourself..."
-                className="form-input resize-none"
-              />
-            </div>
+          </div>
+          <div className="p-6">
+            <textarea
+              name="bio"
+              rows={4}
+              value={formData.bio}
+              onChange={handleChange}
+              placeholder="Tell us a bit about yourself..."
+              className="form-input resize-none"
+            />
           </div>
         </div>
       </div>

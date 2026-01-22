@@ -44,8 +44,7 @@ export default function ProfileView({ profile, user, onEdit }: ProfileViewProps)
   return (
     <div className="min-h-screen bg-gradient-to-br from-slate-50 via-white to-blue-50/30">
       <div className="bg-eduBlue">
-        <div className="px-6 py-8 sm:px-8 lg:px-8">
-          <div className="max-w-7xl mx-auto">
+        <div className="mx-auto max-w-7xl px-6 py-8 lg:px-8">
             <div className="flex flex-col sm:flex-row items-center gap-6">
               <img
                 src={profile?.pictureUrl || "/avatars/male.svg"}
@@ -63,22 +62,20 @@ export default function ProfileView({ profile, user, onEdit }: ProfileViewProps)
                 </div>
               </div>
 
-              <button
-                onClick={onEdit}
-                className="flex items-center gap-2 px-5 py-2.5 bg-white text-eduBlue font-semibold rounded-full shadow-md hover:shadow-xl hover:scale-105 active:scale-95 transition-all duration-200"
-              >
-                <Pencil className="w-4 h-4" />
-                Edit Profile
-              </button>
-            </div>
+            <button
+              onClick={onEdit}
+              className="flex items-center gap-2 px-5 py-2.5 bg-white text-eduBlue font-semibold rounded-full shadow-md hover:shadow-xl transition-all duration-200"
+            >
+              <Pencil className="w-4 h-4" />
+              Edit Profile
+            </button>
           </div>
         </div>
       </div>
 
-      <div className="px-6 py-12 sm:px-8 lg:px-8">
-        <div className="max-w-7xl mx-auto space-y-8">
-          <div className="grid grid-cols-1 lg:grid-cols-3 gap-8">
-            <div className="lg:col-span-2 bg-white rounded-3xl shadow-sm border border-slate-100 overflow-hidden hover:shadow-lg transition-shadow duration-300">
+      <div className="mx-auto max-w-7xl px-6 py-12 lg:px-8 space-y-8">
+        <div className="grid grid-cols-1 lg:grid-cols-3 gap-8">
+          <div className="lg:col-span-2 bg-white rounded-3xl shadow-sm border border-slate-100 overflow-hidden hover:shadow-lg transition-shadow duration-300">
               <div className="px-6 py-5 bg-gradient-to-r from-slate-50 to-white border-b border-slate-100">
                 <div className="flex items-center gap-3">
                   <div className="p-2 bg-eduBlue/10 rounded-xl">
@@ -188,27 +185,26 @@ export default function ProfileView({ profile, user, onEdit }: ProfileViewProps)
                   </div>
                 )}
               </div>
+          </div>
+        </div>
+
+        <div className="bg-white rounded-3xl shadow-sm border border-slate-100 overflow-hidden hover:shadow-lg transition-shadow duration-300">
+          <div className="px-6 py-5 bg-gradient-to-r from-slate-50 to-white border-b border-slate-100">
+            <div className="flex items-center gap-3">
+              <div className="p-2 bg-amber-50 rounded-xl">
+                <FileText className="w-5 h-5 text-amber-600" />
+              </div>
+              <h2 className="text-lg font-semibold text-slate-900">About Me</h2>
             </div>
           </div>
-
-          <div className="bg-white rounded-3xl shadow-sm border border-slate-100 overflow-hidden hover:shadow-lg transition-shadow duration-300">
-            <div className="px-6 py-5 bg-gradient-to-r from-slate-50 to-white border-b border-slate-100">
-              <div className="flex items-center gap-3">
-                <div className="p-2 bg-amber-50 rounded-xl">
-                  <FileText className="w-5 h-5 text-amber-600" />
-                </div>
-                <h2 className="text-lg font-semibold text-slate-900">About Me</h2>
-              </div>
-            </div>
-            <div className="p-6">
-              {profile?.bio ? (
-                <p className="text-slate-600 leading-relaxed whitespace-pre-wrap">
-                  {profile.bio}
-                </p>
-              ) : (
-                <p className="text-slate-400 italic">No bio added yet</p>
-              )}
-            </div>
+          <div className="p-6">
+            {profile?.bio ? (
+              <p className="text-slate-600 leading-relaxed whitespace-pre-wrap">
+                {profile.bio}
+              </p>
+            ) : (
+              <p className="text-slate-400 italic">No bio added yet</p>
+            )}
           </div>
         </div>
       </div>
