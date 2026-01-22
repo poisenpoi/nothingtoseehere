@@ -53,9 +53,13 @@ export default async function DashboardPage() {
       ...e,
       isFavorite: favoriteIds.has(e.courseId),
     }))
-    .sort(
-      (a, b) => b.course.updatedAt.getTime() - a.course.updatedAt.getTime(),
-    );
+    .sort((a, b) => {
+      // Sort favorites on top first
+      if (a.isFavorite && !b.isFavorite) return -1;
+      if (!a.isFavorite && b.isFavorite) return 1;
+      // Then sort by updatedAt
+      return b.course.updatedAt.getTime() - a.course.updatedAt.getTime();
+    });
 
   const activeEnrollment =
     enrollments.find((e) => e.status === "IN_PROGRESS") ?? null;
