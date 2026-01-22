@@ -44,8 +44,8 @@ export default function ProfileView({ profile, user, onEdit }: ProfileViewProps)
   return (
     <div className="min-h-screen bg-gradient-to-br from-slate-50 via-white to-blue-50/30">
       <div className="bg-eduBlue">
-        <div className="px-6 py-8 sm:px-8 lg:px-12">
-          <div className="max-w-5xl mx-auto">
+        <div className="px-6 py-8 sm:px-8 lg:px-8">
+          <div className="max-w-7xl mx-auto">
             <div className="flex flex-col sm:flex-row items-center gap-6">
               <img
                 src={profile?.pictureUrl || "/avatars/male.svg"}
@@ -75,10 +75,10 @@ export default function ProfileView({ profile, user, onEdit }: ProfileViewProps)
         </div>
       </div>
 
-      <div className="px-6 py-12 sm:px-8 lg:px-12">
-        <div className="max-w-5xl mx-auto space-y-8">
+      <div className="px-6 py-12 sm:px-8 lg:px-8">
+        <div className="max-w-7xl mx-auto space-y-8">
           <div className="grid grid-cols-1 lg:grid-cols-3 gap-8">
-            <div className="lg:col-span-2 bg-white rounded-3xl shadow-sm border border-slate-100 overflow-hidden">
+            <div className="lg:col-span-2 bg-white rounded-3xl shadow-sm border border-slate-100 overflow-hidden hover:shadow-lg transition-shadow duration-300">
               <div className="px-6 py-5 bg-gradient-to-r from-slate-50 to-white border-b border-slate-100">
                 <div className="flex items-center gap-3">
                   <div className="p-2 bg-eduBlue/10 rounded-xl">
@@ -126,7 +126,7 @@ export default function ProfileView({ profile, user, onEdit }: ProfileViewProps)
               </div>
             </div>
 
-            <div className="lg:col-span-1 bg-white rounded-3xl shadow-sm border border-slate-100 overflow-hidden flex flex-col">
+            <div className="lg:col-span-1 bg-white rounded-3xl shadow-sm border border-slate-100 overflow-hidden flex flex-col hover:shadow-lg transition-shadow duration-300">
               <div className="px-6 py-5 bg-gradient-to-r from-slate-50 to-white border-b border-slate-100">
                 <div className="flex items-center gap-3">
                   <div className="p-2 bg-indigo-50 rounded-xl">
@@ -191,7 +191,7 @@ export default function ProfileView({ profile, user, onEdit }: ProfileViewProps)
             </div>
           </div>
 
-          <div className="bg-white rounded-3xl shadow-sm border border-slate-100 overflow-hidden">
+          <div className="bg-white rounded-3xl shadow-sm border border-slate-100 overflow-hidden hover:shadow-lg transition-shadow duration-300">
             <div className="px-6 py-5 bg-gradient-to-r from-slate-50 to-white border-b border-slate-100">
               <div className="flex items-center gap-3">
                 <div className="p-2 bg-amber-50 rounded-xl">
