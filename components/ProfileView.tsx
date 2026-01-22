@@ -94,35 +94,44 @@ export default function ProfileView({ profile, user, onEdit }: ProfileViewProps)
                   <h2 className="text-lg font-semibold text-slate-900">Personal Details</h2>
                 </div>
               </div>
-              <div className="p-6 space-y-5">
-                <DetailItem
-                  icon={<UserIcon className="w-4 h-4" />}
-                  label="Full Name"
-                  value={profile?.name}
-                  iconBg="bg-blue-50"
-                  iconColor="text-blue-600"
-                />
-                <DetailItem
-                  icon={<Calendar className="w-4 h-4" />}
-                  label="Date of Birth"
-                  value={formatDate(profile?.dob)}
-                  iconBg="bg-purple-50"
-                  iconColor="text-purple-600"
-                />
-                <DetailItem
-                  icon={<Users className="w-4 h-4" />}
-                  label="Gender"
-                  value={formatGender(profile?.gender)}
-                  iconBg="bg-emerald-50"
-                  iconColor="text-emerald-600"
-                />
-                <DetailItem
-                  icon={<Mail className="w-4 h-4" />}
-                  label="Email"
-                  value={user.email}
-                  iconBg="bg-rose-50"
-                  iconColor="text-rose-600"
-                />
+              <div className="p-6">
+                {/* Two sub-columns inside Personal Details */}
+                <div className="grid grid-cols-1 md:grid-cols-2 gap-x-8 gap-y-5">
+                  {/* Left sub-column */}
+                  <div className="space-y-5">
+                    <DetailItem
+                      icon={<UserIcon className="w-4 h-4" />}
+                      label="Full Name"
+                      value={profile?.name}
+                      iconBg="bg-blue-50"
+                      iconColor="text-blue-600"
+                    />
+                    <DetailItem
+                      icon={<Calendar className="w-4 h-4" />}
+                      label="Date of Birth"
+                      value={formatDate(profile?.dob)}
+                      iconBg="bg-purple-50"
+                      iconColor="text-purple-600"
+                    />
+                  </div>
+                  {/* Right sub-column */}
+                  <div className="space-y-5">
+                    <DetailItem
+                      icon={<Users className="w-4 h-4" />}
+                      label="Gender"
+                      value={formatGender(profile?.gender)}
+                      iconBg="bg-emerald-50"
+                      iconColor="text-emerald-600"
+                    />
+                    <DetailItem
+                      icon={<Mail className="w-4 h-4" />}
+                      label="Email"
+                      value={user.email}
+                      iconBg="bg-rose-50"
+                      iconColor="text-rose-600"
+                    />
+                  </div>
+                </div>
               </div>
             </div>
 
