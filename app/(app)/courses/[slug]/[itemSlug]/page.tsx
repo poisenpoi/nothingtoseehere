@@ -78,10 +78,16 @@ export async function generateMetadata({
 
 export default async function ModulePage({ params }: PageProps) {
   const { slug, itemSlug } = await params;
+  console.log("=== MODULE PAGE DEBUG ===");
+  console.log("Course slug:", slug);
+  console.log("Item slug:", itemSlug);
+
   const user = await getCurrentUser();
+  console.log("User:", user?.email ?? "NOT LOGGED IN");
 
   // Redirect unauthenticated users
   if (!user) {
+    console.log("Redirecting: not authenticated");
     redirect(`/login?redirect=/courses/${slug}/${itemSlug}`);
   }
 
@@ -117,20 +123,32 @@ export default async function ModulePage({ params }: PageProps) {
     },
   });
 
-  if (!course) notFound();
+  console.log("Course found:", !!course);
+  if (!course) {
+    console.log("Redirecting: course not found");
+    notFound();
+  }
 
   // Check if user is enrolled
   const isEnrolled = course.enrollments.length > 0;
+  console.log("Is enrolled:", isEnrolled);
   if (!isEnrolled) {
+    console.log("Redirecting: not enrolled");
     redirect(`/courses/${slug}`);
   }
 
   // Find the current item
   const items = course.items as CourseItemWithIncludes[];
+  console.log("Items count:", items.length);
+  console.log("Item slugs:", items.map(i => i.slug));
   const currentItemIndex = items.findIndex(
     (item: CourseItemWithIncludes) => item.slug === itemSlug
   );
-  if (currentItemIndex === -1) notFound();
+  console.log("Current item index:", currentItemIndex);
+  if (currentItemIndex === -1) {
+    console.log("Redirecting: item not found");
+    notFound();
+  }
 
   const currentItem = items[currentItemIndex];
   const prevItem = currentItemIndex > 0 ? items[currentItemIndex - 1] : null;
