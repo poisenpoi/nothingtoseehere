@@ -138,16 +138,19 @@ model CourseItem {
 }
 
 model Module {
-  id         String @id @default(uuid())
-  title      String
-  contentUrl String
+  id          String @id @default(uuid())
+  title       String
+  description String
+  content     String  @db.Text
+  duration    Int     @default(0) // in minutes
+  videoUrl    String?
+  resources   Json?   // array of {title, url, type}
 
-  courseItem CourseItem?
+  courseItem  CourseItem?
+  progresses  ModuleProgress[]
 
-  progresses ModuleProgress[]
-
-  createdAt DateTime @default(now())
-  updatedAt DateTime @updatedAt
+  createdAt   DateTime @default(now())
+  updatedAt   DateTime @updatedAt
 }
 
 model ModuleProgress {

@@ -204,14 +204,301 @@ async function main() {
   const module1 = await prisma.module.create({
     data: {
       title: "Python Basics",
-      contentUrl: "/thumbnail.jpeg",
+      description:
+        "Learn the fundamental concepts of Python programming including variables, data types, control structures, and functions.",
+      content: `# Introduction to Python
+
+Python is a versatile and beginner-friendly programming language used in web development, data science, automation, and more.
+
+## What You'll Learn
+
+- Variables and Data Types
+- Control Flow (if/else, loops)
+- Functions and Scope
+- Lists, Tuples, and Dictionaries
+- File I/O Operations
+
+## Getting Started
+
+First, let's understand variables in Python:
+
+\`\`\`python
+# Variable assignment
+name = "Alice"
+age = 25
+is_student = True
+
+print(f"Hello, {name}! You are {age} years old.")
+\`\`\`
+
+## Data Types
+
+Python has several built-in data types:
+
+1. **Numeric Types**: int, float, complex
+2. **Text Type**: str
+3. **Boolean Type**: bool
+4. **Sequence Types**: list, tuple, range
+5. **Mapping Type**: dict
+6. **Set Types**: set, frozenset
+
+### Example: Working with Lists
+
+\`\`\`python
+fruits = ["apple", "banana", "cherry"]
+fruits.append("orange")
+print(fruits)  # Output: ['apple', 'banana', 'cherry', 'orange']
+\`\`\`
+
+## Control Flow
+
+Use conditional statements to make decisions:
+
+\`\`\`python
+temperature = 25
+
+if temperature > 30:
+    print("It's hot!")
+elif temperature > 20:
+    print("It's nice!")
+else:
+    print("It's cold!")
+\`\`\`
+
+## Functions
+
+Define reusable code blocks with functions:
+
+\`\`\`python
+def greet(name):
+    return f"Hello, {name}!"
+
+message = greet("Bob")
+print(message)  # Output: Hello, Bob!
+\`\`\`
+
+## Practice Exercise
+
+Try creating a function that calculates the area of a rectangle given its width and height.
+
+## Next Steps
+
+Once you're comfortable with these basics, move on to data analysis with Pandas!`,
+      duration: 60,
+      videoUrl: "https://www.youtube.com/watch?v=dQw4w9WgXcQ",
+      resources: [
+        {
+          title: "Python Official Documentation",
+          url: "https://docs.python.org/3/",
+          type: "documentation",
+        },
+        {
+          title: "Python Cheat Sheet",
+          url: "https://www.pythoncheatsheet.org/",
+          type: "reference",
+        },
+        {
+          title: "Practice Exercises",
+          url: "https://www.hackerrank.com/domains/python",
+          type: "exercise",
+        },
+      ],
     },
   });
 
   const module2 = await prisma.module.create({
     data: {
       title: "Data Analysis with Pandas",
-      contentUrl: "/thumbnail.jpeg",
+      description:
+        "Master data manipulation and analysis using the Pandas library. Learn to work with DataFrames, clean data, and perform statistical analysis.",
+      content: `# Data Analysis with Pandas
+
+Pandas is the most popular Python library for data manipulation and analysis.
+
+## Introduction
+
+Pandas provides powerful data structures like DataFrame and Series that make working with structured data intuitive and efficient.
+
+## Installation
+
+\`\`\`bash
+pip install pandas
+\`\`\`
+
+## Importing Pandas
+
+\`\`\`python
+import pandas as pd
+import numpy as np
+\`\`\`
+
+## Creating DataFrames
+
+### From Dictionary
+
+\`\`\`python
+data = {
+    'Name': ['Alice', 'Bob', 'Charlie', 'Diana'],
+    'Age': [25, 30, 35, 28],
+    'City': ['New York', 'London', 'Paris', 'Tokyo']
+}
+
+df = pd.DataFrame(data)
+print(df)
+\`\`\`
+
+### From CSV File
+
+\`\`\`python
+df = pd.read_csv('data.csv')
+\`\`\`
+
+## Data Exploration
+
+### Basic Information
+
+\`\`\`python
+# Display first 5 rows
+print(df.head())
+
+# Get dataframe info
+print(df.info())
+
+# Statistical summary
+print(df.describe())
+
+# Check for missing values
+print(df.isnull().sum())
+\`\`\`
+
+## Data Selection
+
+### Selecting Columns
+
+\`\`\`python
+# Single column
+ages = df['Age']
+
+# Multiple columns
+subset = df[['Name', 'Age']]
+\`\`\`
+
+### Filtering Rows
+
+\`\`\`python
+# Filter by condition
+young_people = df[df['Age'] < 30]
+
+# Multiple conditions
+result = df[(df['Age'] > 25) & (df['City'] == 'New York')]
+\`\`\`
+
+## Data Manipulation
+
+### Adding Columns
+
+\`\`\`python
+df['Age_Next_Year'] = df['Age'] + 1
+\`\`\`
+
+### Sorting
+
+\`\`\`python
+df_sorted = df.sort_values('Age', ascending=False)
+\`\`\`
+
+### Grouping
+
+\`\`\`python
+city_avg_age = df.groupby('City')['Age'].mean()
+\`\`\`
+
+## Data Cleaning
+
+### Handling Missing Values
+
+\`\`\`python
+# Drop rows with missing values
+df_clean = df.dropna()
+
+# Fill missing values
+df_filled = df.fillna(0)
+
+# Fill with column mean
+df['Age'].fillna(df['Age'].mean(), inplace=True)
+\`\`\`
+
+### Removing Duplicates
+
+\`\`\`python
+df_unique = df.drop_duplicates()
+\`\`\`
+
+## Practical Example
+
+Let's analyze a sales dataset:
+
+\`\`\`python
+# Load sales data
+sales = pd.read_csv('sales.csv')
+
+# Calculate total sales by product
+product_sales = sales.groupby('Product')['Revenue'].sum()
+
+# Find top 5 products
+top_products = product_sales.sort_values(ascending=False).head(5)
+
+# Calculate monthly trends
+sales['Date'] = pd.to_datetime(sales['Date'])
+monthly_sales = sales.groupby(sales['Date'].dt.month)['Revenue'].sum()
+
+print("Top 5 Products:")
+print(top_products)
+\`\`\`
+
+## Best Practices
+
+1. Always explore your data first with \`head()\`, \`info()\`, and \`describe()\`
+2. Handle missing values appropriately for your use case
+3. Use vectorized operations instead of loops for better performance
+4. Save your cleaned data to avoid repeating preprocessing
+
+## Exercise
+
+Download a sample CSV dataset and perform the following:
+1. Load the data
+2. Check for missing values
+3. Calculate summary statistics
+4. Create a new column based on existing ones
+5. Group and aggregate the data
+
+## Next Steps
+
+Now that you understand Pandas basics, you're ready for the hands-on workshop where you'll apply these skills to real-world datasets!`,
+      duration: 90,
+      videoUrl: "https://www.youtube.com/watch?v=vmEHCJofslg",
+      resources: [
+        {
+          title: "Pandas Documentation",
+          url: "https://pandas.pydata.org/docs/",
+          type: "documentation",
+        },
+        {
+          title: "10 Minutes to Pandas",
+          url: "https://pandas.pydata.org/docs/user_guide/10min.html",
+          type: "tutorial",
+        },
+        {
+          title: "Sample Datasets",
+          url: "https://www.kaggle.com/datasets",
+          type: "dataset",
+        },
+        {
+          title: "Pandas Cheat Sheet",
+          url: "https://pandas.pydata.org/Pandas_Cheat_Sheet.pdf",
+          type: "reference",
+        },
+      ],
     },
   });
 
