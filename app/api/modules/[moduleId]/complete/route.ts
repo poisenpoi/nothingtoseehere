@@ -1,29 +1,43 @@
 import { prisma } from "@/lib/prisma";
 import { requireUser } from "@/lib/auth";
 import { NextResponse } from "next/server";
+import { PrismaClient } from "@prisma/client";
+
+type TransactionClient = Omit<
+  PrismaClient,
+  "$connect" | "$disconnect" | "$on" | "$transaction" | "$use" | "$extends"
+>;
 
 export async function POST(
   _: Request,
-  { params }: { params: { moduleId: string } }
+  { params }: { params: Promise<{ moduleId: string }> }
 ) {
   try {
+    const { moduleId } = await params;
     const user = await requireUser();
 
-    await prisma.$transaction(async (tx) => {
+    await prisma.$transaction(async (tx: TransactionClient) => {
+      // Get the module with its course item to find the courseId
       const module = await tx.module.findUnique({
-        where: { id: params.moduleId },
-        select: { courseId: true },
+        where: { id: moduleId },
+        include: {
+          courseItem: {
+            select: { courseId: true },
+          },
+        },
       });
 
-      if (!module) {
+      if (!module || !module.courseItem) {
         throw new Error("MODULE_NOT_FOUND");
       }
+
+      const courseId = module.courseItem.courseId;
 
       const enrollment = await tx.enrollment.findUnique({
         where: {
           userId_courseId: {
             userId: user.id,
-            courseId: module.courseId,
+            courseId,
           },
         },
       });
@@ -36,7 +50,7 @@ export async function POST(
         where: {
           userId_moduleId: {
             userId: user.id,
-            moduleId: params.moduleId,
+            moduleId,
           },
         },
         update: {
@@ -44,26 +58,30 @@ export async function POST(
         },
         create: {
           userId: user.id,
-          moduleId: params.moduleId,
+          moduleId,
           completedAt: new Date(),
         },
       });
 
       const totalItems = await tx.courseItem.count({
-        where: { courseId: module.courseId },
+        where: { courseId },
       });
 
       const completedModules = await tx.moduleProgress.count({
         where: {
           userId: user.id,
-          module: { courseId: module.courseId },
+          module: {
+            courseItem: { courseId },
+          },
         },
       });
 
       const completedWorkshops = await tx.workshopSubmission.count({
         where: {
           userId: user.id,
-          workshop: { courseId: module.courseId },
+          workshop: {
+            courseItem: { courseId },
+          },
         },
       });
 
@@ -73,7 +91,7 @@ export async function POST(
         where: {
           userId_courseId: {
             userId: user.id,
-            courseId: module.courseId,
+            courseId,
           },
         },
         data: {

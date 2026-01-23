@@ -1,35 +1,41 @@
 import { prisma } from "@/lib/prisma";
 import { NextResponse } from "next/server";
 import { requireUser } from "@/lib/auth";
-import { Prisma } from "@prisma/client";
 
 export async function POST(
   _: Request,
-  { params }: { params: { workshopId: string } }
+  { params }: { params: Promise<{ workshopId: string }> }
 ) {
   try {
+    const { workshopId } = await params;
     const user = await requireUser();
 
-    const workshop = await prisma.workshop.findFirst({
-      where: {
-        id: params.workshopId,
-        course: { isPublished: true },
+    // Get workshop with its course item to find the courseId
+    const workshop = await prisma.workshop.findUnique({
+      where: { id: workshopId },
+      include: {
+        courseItem: {
+          include: {
+            course: { select: { isPublished: true } },
+          },
+        },
       },
-      select: { id: true, courseId: true },
     });
 
-    if (!workshop) {
+    if (!workshop || !workshop.courseItem || !workshop.courseItem.course.isPublished) {
       return NextResponse.json(
         { message: "Workshop not found" },
         { status: 404 }
       );
     }
 
+    const courseId = workshop.courseItem.courseId;
+
     const enrollment = await prisma.enrollment.findUnique({
       where: {
         userId_courseId: {
           userId: user.id,
-          courseId: workshop.courseId,
+          courseId,
         },
       },
     });
@@ -52,9 +58,12 @@ export async function POST(
       { message: "Workshop registered" },
       { status: 200 }
     );
-  } catch (error) {
+  } catch (error: unknown) {
+    // Check for Prisma unique constraint violation (P2002)
     if (
-      error instanceof Prisma.PrismaClientKnownRequestError &&
+      error &&
+      typeof error === "object" &&
+      "code" in error &&
       error.code === "P2002"
     ) {
       return NextResponse.json(
