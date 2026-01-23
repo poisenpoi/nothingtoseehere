@@ -4,16 +4,17 @@ import { NextResponse } from "next/server";
 
 export async function POST(
   req: Request,
-  { params }: { params: { workshopId: string } }
+  { params }: { params: Promise<{ workshopId: string }> }
 ) {
   try {
     const user = await requireUser();
+    const { workshopId } = await params;
 
     const registered = await prisma.workshopRegistration.findUnique({
       where: {
         userId_workshopId: {
           userId: user.id,
-          workshopId: params.workshopId,
+          workshopId: workshopId,
         },
       },
     });
@@ -32,7 +33,7 @@ export async function POST(
       data: {
         submissionUrl,
         userId: user.id,
-        workshopId: params.workshopId,
+        workshopId: workshopId,
       },
     });
 

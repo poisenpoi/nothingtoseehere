@@ -4,26 +4,33 @@ import { NextResponse } from "next/server";
 
 export async function POST(
   _: Request,
-  { params }: { params: { moduleId: string } }
+  { params }: { params: Promise<{ moduleId: string }> }
 ) {
   try {
     const user = await requireUser();
+    const { moduleId } = await params;
 
     await prisma.$transaction(async (tx) => {
       const module = await tx.module.findUnique({
-        where: { id: params.moduleId },
-        select: { courseId: true },
+        where: { id: moduleId },
+        include: {
+          courseItem: {
+            select: { courseId: true },
+          },
+        },
       });
 
-      if (!module) {
+      if (!module || !module.courseItem) {
         throw new Error("MODULE_NOT_FOUND");
       }
+
+      const courseId = module.courseItem.courseId;
 
       const enrollment = await tx.enrollment.findUnique({
         where: {
           userId_courseId: {
             userId: user.id,
-            courseId: module.courseId,
+            courseId: courseId,
           },
         },
       });
@@ -36,7 +43,7 @@ export async function POST(
         where: {
           userId_moduleId: {
             userId: user.id,
-            moduleId: params.moduleId,
+            moduleId: moduleId,
           },
         },
         update: {
@@ -44,26 +51,30 @@ export async function POST(
         },
         create: {
           userId: user.id,
-          moduleId: params.moduleId,
+          moduleId: moduleId,
           completedAt: new Date(),
         },
       });
 
       const totalItems = await tx.courseItem.count({
-        where: { courseId: module.courseId },
+        where: { courseId: courseId },
       });
 
       const completedModules = await tx.moduleProgress.count({
         where: {
           userId: user.id,
-          module: { courseId: module.courseId },
+          module: {
+            courseItem: { courseId: courseId },
+          },
         },
       });
 
       const completedWorkshops = await tx.workshopSubmission.count({
         where: {
           userId: user.id,
-          workshop: { courseId: module.courseId },
+          workshop: {
+            courseItem: { courseId: courseId },
+          },
         },
       });
 
@@ -73,7 +84,7 @@ export async function POST(
         where: {
           userId_courseId: {
             userId: user.id,
-            courseId: module.courseId,
+            courseId: courseId,
           },
         },
         data: {
@@ -84,15 +95,15 @@ export async function POST(
     });
 
     return NextResponse.json({ message: "Module completed" }, { status: 200 });
-  } catch (error: any) {
-    if (error.message === "MODULE_NOT_FOUND") {
+  } catch (error: unknown) {
+    if (error instanceof Error && error.message === "MODULE_NOT_FOUND") {
       return NextResponse.json(
         { message: "Module not found" },
         { status: 404 }
       );
     }
 
-    if (error.message === "NOT_ENROLLED") {
+    if (error instanceof Error && error.message === "NOT_ENROLLED") {
       return NextResponse.json(
         { message: "Not enrolled in this course" },
         { status: 403 }

@@ -5,31 +5,40 @@ import { Prisma } from "@prisma/client";
 
 export async function POST(
   _: Request,
-  { params }: { params: { workshopId: string } }
+  { params }: { params: Promise<{ workshopId: string }> }
 ) {
   try {
     const user = await requireUser();
+    const { workshopId } = await params;
 
     const workshop = await prisma.workshop.findFirst({
       where: {
-        id: params.workshopId,
-        course: { isPublished: true },
+        id: workshopId,
+        courseItem: {
+          course: { isPublished: true },
+        },
       },
-      select: { id: true, courseId: true },
+      include: {
+        courseItem: {
+          select: { courseId: true },
+        },
+      },
     });
 
-    if (!workshop) {
+    if (!workshop || !workshop.courseItem) {
       return NextResponse.json(
         { message: "Workshop not found" },
         { status: 404 }
       );
     }
 
+    const courseId = workshop.courseItem.courseId;
+
     const enrollment = await prisma.enrollment.findUnique({
       where: {
         userId_courseId: {
           userId: user.id,
-          courseId: workshop.courseId,
+          courseId: courseId,
         },
       },
     });
@@ -52,7 +61,7 @@ export async function POST(
       { message: "Workshop registered" },
       { status: 200 }
     );
-  } catch (error) {
+  } catch (error: unknown) {
     if (
       error instanceof Prisma.PrismaClientKnownRequestError &&
       error.code === "P2002"
